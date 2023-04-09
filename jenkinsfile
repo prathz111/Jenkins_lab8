@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-		sh "test1.sh"
+		sh "/home/netman/Documents/Lab9/lab9_py/test1.sh"
             }
         }
         stage('Test') {
