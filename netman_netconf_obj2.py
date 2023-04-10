@@ -7,6 +7,7 @@ try:
     import ipaddress
     import os
     import sys
+
 except Exception:
     print('Install all the necessary modules')
     sys.exit()
@@ -72,8 +73,8 @@ if __name__ == "__main__":
     for i in range(0, 5):
         connection = manager.connect(host=MGM_IP[i],
                                      port=22,
-                                     username='lab',
-                                     password='lab123',
+                                     username='netman',
+                                     password='netman',
                                      hostkey_verify=False,
                                      device_params={'name': 'iosxr'},
                                      allow_agent=False,
