@@ -11,6 +11,7 @@ pipeline {
         stage('Stage2') {
             steps {
                // sh 'pylint --exit-zero /home/netman/Documents/Lab9/lab9_py/netman_netconf_obj2.py'
+		sh '/home/netman/Documents/Lab9/lab9_py/pylintcheck.sh'
 		echo 'pylint stage'
             }
         }
