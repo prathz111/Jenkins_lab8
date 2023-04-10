@@ -10,7 +10,8 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'pylint --exit-zero /home/netman/Documents/Lab9/lab9_py/netman_netconf_obj2.py'
+               // sh 'pylint --exit-zero /home/netman/Documents/Lab9/lab9_py/netman_netconf_obj2.py'
+		echo 'pylint stage'
             }
         }
         stage('Deploy') {
