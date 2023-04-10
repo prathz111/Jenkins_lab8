@@ -17,7 +17,8 @@ pipeline {
         }
         stage('Stage3') {
             steps {
-                echo 'Stage3 Under process....'
+                echo 'Stage3'
+		sh 'python3 /home/netman/Documents/Lab9/lab9_py/netman_netconf_obj2.py'
             }
         }
 	 stage('Stage4') {
