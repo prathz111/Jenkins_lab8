@@ -5,13 +5,19 @@ pipeline {
         stage('Stage1') {
             steps {
                 echo 'Building..'
-		sh "/home/netman/Documents/Lab9/lab9_py/test1.sh"
+                sh "/home/netman/Documents/Lab9/lab9_py/test1.sh"
             }
         }
         stage('Stage2') {
             steps {
-                sh 'pylint --exit-zero --fail-under=5 /home/netman/Documents/Lab9/lab9_py/netman_netconf_obj2.py' || error 'Pylint check failed'
-		echo 'pylint stage'
+                script {
+                    def pylint_result = sh(script: "pylint --exit-zero /home/netman/Documents/Lab9/lab9_py/netman.sh", returnStatus: true)
+                    if (pylint_result != 0) {
+                        error 'Pylint check-style violations detected. Quality gate not met'
+                    } else {
+                        echo 'No Pylint violations detected'
+                    }
+                }
             }
         }
         stage('Stage3') {
@@ -19,12 +25,19 @@ pipeline {
                 echo 'Stage3 Under process....'
             }
         }
-	 stage('Stage4') {
+        stage('Stage4') {
             steps {
                 echo 'stage4 under process....'
             }
         }
+    }
 
+    post {
+        failure {
+            echo 'Pylint check-style violations detected. Fix the issues and retry the build.'
+            currentBuild.result = 'FAILURE'
+            error 'Pylint check-style violations detected. Quality gate not met'
+        }
     }
 }
 
