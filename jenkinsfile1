@@ -2,28 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Stage1') {
             steps {
                 echo 'Building..'
-                sh "/home/netman/Documents/Lab9/lab9_py/test1.sh"
+		sh "/home/netman/Documents/Lab9/lab9_py/test1.sh"
             }
         }
-        stage('Checkstyle') {
+        stage('Stage2') {
             steps {
-		 sh 'pylint --exit-zero /home/netman/Documents/Lab9/lab9_py/netman_netconf_obj2.py > pylint_report.txt || pylint_exit_code=$?'
-    script {
-        def pylint_exit_code = sh(script: 'echo ${PIPESTATUS[0]}', returnStatus: true)
-        if (pylint_exit_code != 0) {
-            error('Pylint found violations in netman_netconf_obj2.py. Please fix before proceeding.')
-       		 }
+                sh 'pylint --exit-zero --fail-under=5 /home/netman/Documents/Lab9/lab9_py/netman_netconf_obj2.py' || error 'Pylint check failed'
+		echo 'pylint stage'
             }
         }
-        stage('Build Again') {
+        stage('Stage3') {
             steps {
-                echo 'Building again...'
-                sh "/home/netman/Documents/Lab9/lab9_py/test1.sh"
+                echo 'Stage3 Under process....'
             }
         }
+	 stage('Stage4') {
+            steps {
+                echo 'stage4 under process....'
+            }
+        }
+
     }
 }
 
