@@ -2,22 +2,28 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Stage1') {
             steps {
                 echo 'Building..'
 		sh "/home/netman/Documents/Lab9/lab9_py/test1.sh"
             }
         }
-        stage('Test') {
+        stage('Stage2') {
             steps {
                // sh 'pylint --exit-zero /home/netman/Documents/Lab9/lab9_py/netman_netconf_obj2.py'
 		echo 'pylint stage'
             }
         }
-        stage('Deploy') {
+        stage('Stage3') {
             steps {
-                echo 'Deploying....'
+                echo 'Stage3 Under process....'
             }
         }
+	 stage('Stage4') {
+            steps {
+                echo 'stage4 under process....'
+            }
+        }
+
     }
 }

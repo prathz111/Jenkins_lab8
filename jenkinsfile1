@@ -1,0 +1,40 @@
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+                sh "/home/netman/Documents/Lab9/lab9_py/test1.sh"
+            }
+        }
+        stage('Checkstyle') {
+            steps {
+                sh 'pip install pylint'
+                sh 'pylint /home/netman/Documents/Lab9/lab9_py/netman_netconf_obj2.py > pylint_report.txt || exit 0'
+                sh 'pylint_exit_code=$?'
+                sh 'pylint_report=$(cat pylint_report.txt)'
+                echo "PyLint Report: $pylint_report"
+                if (pylint_exit_code == 0) {
+                    echo 'No Checkstyle violations found.'
+                } else if (pylint_exit_code >= 5) {
+                    echo "Checkstyle violations found."
+                    sh 'pylint --rcfile=.pylintrc /home/netman/Documents/Lab9/lab9_py/netman_netconf_obj2.py > pylint_report.txt'
+                    sh 'pylint_exit_code=$?'
+                    sh 'pylint_report=$(cat pylint_report.txt)'
+                    echo "PyLint Report: $pylint_report"
+                    error("Checkstyle violations found. Fix the issues and try again.")
+                } else {
+                    echo "Ignoring Checkstyle violations as they are below the quality gate threshold."
+                }
+            }
+        }
+        stage('Build Again') {
+            steps {
+                echo 'Building again...'
+                sh "/home/netman/Documents/Lab9/lab9_py/test1.sh"
+            }
+        }
+    }
+}
