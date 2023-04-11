@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Stage1') {
             steps {
-                echo 'Building..'
+                echo 'Stage1 Building..'
 		sh "/home/netman/Documents/Lab9/lab9_py/test1.sh"
 		sh "pip install netmiko==3.0.0"
             }
@@ -32,7 +32,7 @@ pipeline {
     }
 post {
         always {   
-            emailext attachLog: true, body: '$BUILD_STATUS', subject: 'Jenkins pipeline1 result', to: 'appapatil2503@gmail.com'
+            emailext attachLog: true, body: '$BUILD_STATUS', subject: 'Jenkins pipeline1 result', to: 'pshindekov@gmail.com'
         }
     }
 }
