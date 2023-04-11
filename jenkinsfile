@@ -30,4 +30,9 @@ pipeline {
         }
 
     }
+post {
+        always {   
+            emailext attachLog: true, body: '$BUILD_STATUS', subject: 'Jenkins pipeline1 result', to: 'kingofvikhroli@gmail.com'
+        }
+    }
 }
