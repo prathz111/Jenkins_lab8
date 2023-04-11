@@ -23,7 +23,8 @@ pipeline {
         }
 	 stage('Stage4') {
             steps {
-                echo 'stage4 under process....'
+                echo 'stage4'
+		sh 'python3 /home/netman/Documents/Lab9/lab9_py/unit2.py'
             }
         }
 
